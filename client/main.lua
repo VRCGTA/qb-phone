@@ -669,7 +669,7 @@ RegisterNUICallback('PayInvoice', function(data, cb)
         if CanPay then PhoneData.Invoices = Invoices end
         cb(CanPay)
     end, society, amount, invoiceId, senderCitizenId)
-    TriggerServerEvent('qb-phone:server:BillingEmail', data, true)
+    TriggerServerEvent('jim-payments:Tickets:Give', data)
 end)
 
 RegisterNUICallback('DeclineInvoice', function(data, cb)
@@ -680,6 +680,7 @@ RegisterNUICallback('DeclineInvoice', function(data, cb)
         PhoneData.Invoices = Invoices
         cb('ok')
     end, society, amount, invoiceId)
+    TriggerServerEvent('jim-payments:Tickets:Give', data)
     TriggerServerEvent('qb-phone:server:BillingEmail', data, false)
 end)
 
@@ -731,6 +732,7 @@ RegisterNUICallback('PostNewTweet', function(data, cb)
         citizenid = PhoneData.PlayerData.citizenid,
         message = escape_str(data.Message),
         time = data.Date,
+        formatedDate = data.FormatedDate,
         tweetId = GenerateTweetId(),
         picture = data.Picture,
         url = data.url

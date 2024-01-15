@@ -215,9 +215,11 @@ $(document).on('click', '#send-tweet', function(e){
     var imageURL = $('#tweet-new-url').val()
     if (TweetMessage != "") {
         var CurrentDate = new Date();
+        let formatedDate = CurrentDate.toISOString().replace('T', ' ').substring(0,19);
         $.post('https://qb-phone/PostNewTweet', JSON.stringify({
             Message: TweetMessage,
             Date: CurrentDate,
+            FormatedDate: formatedDate,
             Picture: QB.Phone.Data.MetaData.profilepicture,
             url: imageURL
         }), function(Tweets){

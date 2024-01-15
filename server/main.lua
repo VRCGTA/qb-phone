@@ -802,7 +802,7 @@ RegisterNetEvent('qb-phone:server:UpdateTweets', function(NewTweets, TweetData)
             TweetData.firstName,
             TweetData.lastName,
             TweetData.message,
-            TweetData.date,
+            os.date("%Y-%m-%d %H:%M:%S"),
             TweetData.url:gsub('[%<>\"()\' $]', ''),
             TweetData.picture:gsub('[%<>\"()\' $]', ''),
             TweetData.tweetId
@@ -814,7 +814,7 @@ RegisterNetEvent('qb-phone:server:UpdateTweets', function(NewTweets, TweetData)
             TweetData.firstName,
             TweetData.lastName,
             TweetData.message,
-            TweetData.time,
+            os.date("%Y-%m-%d %H:%M:%S"),
             TweetData.url:gsub('[%<>\"()\' $]', ''),
             TweetData.picture:gsub('[%<>\"()\' $]', ''),
             TweetData.tweetId
