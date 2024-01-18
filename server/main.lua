@@ -226,19 +226,20 @@ QBCore.Functions.CreateCallback('qb-phone:server:GetPhoneData', function(source,
             PhoneData.Invoices = invoices
         end
 
-        local garageresult = MySQL.query.await('SELECT * FROM player_vehicles WHERE citizenid = ?', { Player.PlayerData.citizenid })
-        if garageresult[1] ~= nil then
-            PhoneData.Garage = garageresult
-        end
+        -- jg advanced garage v2
+        -- local garageresult = MySQL.query.await('SELECT * FROM player_vehicles WHERE citizenid = ?', { Player.PlayerData.citizenid })
+        -- if garageresult[1] ~= nil then
+        --     PhoneData.Garage = garageresult
+        -- end
 
-        local messages = MySQL.query.await('SELECT * FROM phone_messages WHERE citizenid = ?', { Player.PlayerData.citizenid })
-        if messages ~= nil and next(messages) ~= nil then
-            PhoneData.Chats = messages
-        end
+        -- local messages = MySQL.query.await('SELECT * FROM phone_messages WHERE citizenid = ?', { Player.PlayerData.citizenid })
+        -- if messages ~= nil and next(messages) ~= nil then
+        --     PhoneData.Chats = messages
+        -- end
 
-        if AppAlerts[Player.PlayerData.citizenid] ~= nil then
-            PhoneData.Applications = AppAlerts[Player.PlayerData.citizenid]
-        end
+        -- if AppAlerts[Player.PlayerData.citizenid] ~= nil then
+        --     PhoneData.Applications = AppAlerts[Player.PlayerData.citizenid]
+        -- end
 
         if MentionedTweets[Player.PlayerData.citizenid] ~= nil then
             PhoneData.MentionedTweets = MentionedTweets[Player.PlayerData.citizenid]
