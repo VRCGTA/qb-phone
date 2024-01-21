@@ -774,6 +774,7 @@ RegisterNUICallback('PostNewTweet', function(data, cb)
         cb(PhoneData.Tweets)
 
         TriggerServerEvent('qb-phone:server:UpdateTweets', PhoneData.Tweets, TweetMessage)
+        TriggerServerEvent('qb-phone:server:TweetToDiscord', TweetMessage)
     else
         SendNUIMessage({
             action = 'PhoneNotification',

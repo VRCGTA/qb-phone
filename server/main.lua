@@ -6,8 +6,9 @@ local Hashtags = {}
 local Calls = {}
 local Adverts = {}
 local GeneratedPlates = {}
-local WebHook = 'https://discord.com/api/webhooks/1193858986571735040/Nv2sQNPza_GuscfHsksKG1vNZTkFB_cOTCR6vbdYKqeL5uJDbzZm3v52IVm25Rk1dl3R'
+local WebHook = 'https://discord.com/api/webhooks/1193858986571735040/Nv2sQNPza_GuscfHsksKG1vNZTkFB_cOTCR6vbdYKqeL5uJDbzZm3v52IVm25Rk1dl3R' --image
 local bannedCharacters = { '%', '$', ';' }
+local TweetWebHook = 'https://discord.com/api/webhooks/1198196189192007760/_-NBy_DD_6jpgNSU_nkkiFncy6ArrGMX791KJdCA5JX9fh9UozBheX22G3Thbw3dGzrB'
 local TWData = {}
 
 -- Functions
@@ -822,6 +823,40 @@ RegisterNetEvent('qb-phone:server:UpdateTweets', function(NewTweets, TweetData)
         })
         TriggerClientEvent('qb-phone:client:UpdateTweets', -1, src, NewTweets, TweetData, false)
     end
+end)
+
+RegisterNetEvent('qb-phone:server:TweetToDiscord', function(TweetMessage)
+    if TweetWebHook == '' then
+        print('Set your webhook to ensure that your tweet will work!!!!!! Set this on line 11 of the server sided script!!!!!')
+        return
+    end
+    
+    tweetDate = os.date("!%Y-%m-%dT%TZ")
+    -- print(tweetDate)
+    local payload = json.encode({
+        username = TweetMessage.firstName .. ' ' ..  TweetMessage.lastName,
+        avatar_url = TweetMessage.picture,
+        content = "",
+        embeds = {
+            {
+                description = TweetMessage.message,
+                timestamp = tweetDate,
+                color = 1941746,
+                image = 
+                {
+                    url =  TweetMessage.url
+                },
+                author = 
+                {
+                  name ="@" .. TweetMessage.firstName .. '_' ..  TweetMessage.lastName,
+                  icon_url = TweetMessage.picture
+                }
+            }
+        }
+    })
+    -- print(payload)
+    PerformHttpRequest(TweetWebHook, function() end, 'POST', payload, { ['Content-Type'] = 'application/json' })
+    -- print("sended")
 end)
 
 RegisterNetEvent('qb-phone:server:TransferMoney', function(iban, amount)
