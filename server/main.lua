@@ -832,7 +832,9 @@ RegisterNetEvent('qb-phone:server:TweetToDiscord', function(TweetMessage)
     end
     
     tweetDate = os.date("!%Y-%m-%dT%TZ")
-    -- print(tweetDate)
+    if string.sub(TweetMessage.url, 1,1) == "\"" and string.sub(TweetMessage.url, -1, -1) == "\"" then
+        TweetMessage.url = string.sub(TweetMessage.url, 2, -2)
+    end
     local payload = json.encode({
         username = TweetMessage.firstName .. ' ' ..  TweetMessage.lastName,
         avatar_url = TweetMessage.picture,
@@ -854,9 +856,7 @@ RegisterNetEvent('qb-phone:server:TweetToDiscord', function(TweetMessage)
             }
         }
     })
-    -- print(payload)
     PerformHttpRequest(TweetWebHook, function() end, 'POST', payload, { ['Content-Type'] = 'application/json' })
-    -- print("sended")
 end)
 
 RegisterNetEvent('qb-phone:server:TransferMoney', function(iban, amount)
